@@ -89,4 +89,6 @@ export AWS_SESSION_TOKEN="YOUR_TOKEN"
 export AZURE_RANGE_NAMES=AzureDevOps,AzureCloud.northerneurope
 python3 ./make_prefix_list.py
 ```
-
+#### What next?
+Plan is to turn this into a Lambda and get it running a schedule. This seemed easy until I realised that I couldn't just delete and recreate any prefix lists that were in use. Rather than
+get bogged down in complex merge logic I then thought that I could call the `modify` API to remove all the ranges from a list and re-add. This is where I started to head - `remove_entries_from_list` function is already in the code. Following the pattern found in cool stuff like instance scheduler I think the way to go will be to store state in DynamoDb (for AzureDevOps the following PLs were created e.g.) and run the updates off of that. If that sounds good, then PRs are welcome! :-) (Or I might get to it one day... Maybe...)
